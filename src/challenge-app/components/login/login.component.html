@@ -1,0 +1,37 @@
+<form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submit()">
+    <nz-form-item>
+        <nz-form-control>
+            <nz-input-group>
+                <input type="text" nz-input formControlName="firstName" placeholder="First Name">
+            </nz-input-group>
+            <ng-template [ngIf]="loginForm.get('firstName').dirty">
+                <ng-container *ngTemplateOutlet="showError;context: {error:loginForm.get('firstName').errors, name: 'First Name'}"></ng-container>
+            </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control>
+            <nz-input-group>
+                <input type="text" nz-input formControlName="lastName" placeholder="Last Name">
+            </nz-input-group>
+            <ng-template [ngIf]="loginForm.get('lastName').dirty">
+                <ng-container *ngTemplateOutlet="showError;context: {error:loginForm.get('lastName').errors, name: 'Last Name'} "></ng-container>
+            </ng-template>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-control>
+            <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
+        </nz-form-control>
+    </nz-form-item>
+</form>
+
+<ng-template #showError let-error="error" let-name="name">
+    <ng-template [ngIf]="error">
+        <nz-form-explain *ngIf="error.required">
+            Please input your {{name}}!
+        </nz-form-explain>
+        <nz-form-explain *ngIf="error.maxlength"> Please
+            Your {{name}} must be no more than {{maxInputChatacters}} character</nz-form-explain>
+    </ng-template>
+</ng-template>
