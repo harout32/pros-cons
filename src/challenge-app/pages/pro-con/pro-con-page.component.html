@@ -1,6 +1,12 @@
-<div *ngFor="let pro of proCon.pros">
-    {{pro}}
-</div>
-<div *ngFor="let con of proCon.cons">
-    {{con}}
+<div nz-row nzType="flex" nzJustify="space-around" nzAlign="middle" 
+class="background"
+>
+    <div nz-col nzSpan="6">
+        <challenge-app-pro-con-list listId="pros" [list]="proCon.pros">
+        </challenge-app-pro-con-list>
+    </div>
+    <div nz-col nzSpan="6">
+        <challenge-app-pro-con-list listId="cons" [list]="proCon.cons">
+        </challenge-app-pro-con-list>
+    </div>
 </div>

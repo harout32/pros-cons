@@ -1,3 +1,5 @@
+<nz-card style="width:300px;">
+    <h3>Welcome To Pro's Con's App</h3>
 <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="submit()">
     <nz-form-item>
         <nz-form-control>
@@ -21,7 +23,7 @@
     </nz-form-item>
     <nz-form-item>
         <nz-form-control>
-            <button nz-button class="login-form-button" [nzType]="'primary'">Log in</button>
+            <button nz-button class="login-form-button" [nzType]="'primary'" [nzLoading]="isLoading">Log in</button>
         </nz-form-control>
     </nz-form-item>
 </form>
@@ -35,3 +37,4 @@
             Your {{name}} must be no more than {{maxInputChatacters}} character</nz-form-explain>
     </ng-template>
 </ng-template>
+</nz-card>

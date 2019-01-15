@@ -1,18 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProConService } from '@services';
 import { ProConResponseModel } from '@models';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'challenge-pro-con-page',
-    templateUrl: 'pro-con-page.component.html'
+    templateUrl: 'pro-con-page.component.html',
+    styleUrls: ['./pro-con-page.component.scss']
 })
 
-export class ProConPageComponent implements OnInit {
+export class ProConPageComponent implements OnInit, OnDestroy {
     public proCon: ProConResponseModel;
-    constructor(private proConService: ProConService) { }
+    private proConSubscription: Subscription;
+    constructor(private proConService: ProConService, private router: ActivatedRoute) { }
 
     ngOnInit() {
-        console.log(this.proConService);
-        this.proCon = this.proConService.getProCon();
+
+        this.router.data.subscribe(data => {
+            this.proCon = data.proCon;
+        });
+        this.proConSubscription = this.proConService.getProCon().subscribe(data => {
+            this.proCon = data;
+        });
+    }
+    ngOnDestroy() {
+        this.proConSubscription.unsubscribe();
     }
 }

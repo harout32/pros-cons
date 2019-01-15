@@ -1,0 +1,70 @@
+<h1 class="title">{{title}}</h1>
+<nz-list
+[nzRenderItem]="item"
+[nzDataSource]="list"
+nzBordered 
+nzSize="small"
+class="list"
+>
+<ng-template #item let-item let-index="index">
+    <nz-list-item 
+    [nzContent]="item"
+    [nzActions]="[editAction, deleteAction]"
+    >
+    <ng-template #editAction> 
+            <button 
+            nz-button 
+            nzSize="small"
+            nzType="dash" 
+            nzShape="circle"
+            nz-tooltip nzTitle="Edit" nzPlacement="left" (click)="edit(index, editContent)" [ngClass]="{'disabled' : waiting}"
+            >
+            <i nz-icon type="edit" theme="outline"></i>
+        </button>
+    </ng-template>
+    <ng-template #deleteAction>
+            <button 
+            nz-button 
+            nzSize="small"
+            nzType="dash" 
+            nzShape="circle"
+            nzPlacement="right"
+            [ngClass]="{'disabled' : waiting}"
+            nz-popconfirm 
+            [nzTitle]="'Are you sure delete this ' + title + ' ?'" 
+            (nzOnConfirm)="delete(index)"
+            >
+            <i nz-icon type="minus" theme="outline"></i>
+        </button>
+      
+    </ng-template>
+
+    </nz-list-item>
+</ng-template>
+</nz-list>
+<nz-list-item [nzActions]="[addAction]">
+
+        <input nz-input [(ngModel)]="newItem" [disabled]="waiting"/>
+        <ng-template #addAction>
+            <button 
+            nz-button 
+            nzType="primary" 
+            nzShape="circle"
+            nz-tooltip nzTitle="Add" 
+            nzPlacement="right"
+            (click)="add()"
+            [ngClass]="{'disabled' : waiting}"
+            >
+                <i nz-icon type="plus" theme="outline"></i>
+            </button>
+        </ng-template>
+        <!-- <i nz-icon type="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control,$event)"></i> -->
+
+</nz-list-item>
+
+<ng-template #editContent>
+    <input nz-input [(ngModel)]="selectedToEdit"  [disabled]="true" nz-tooltip nzTitle="Current Value" 
+    nzPlacement="top">
+    <input nz-input type="text" placeholder="Type New Value"[(ngModel)]="editValue" style="margin-top: 30px" autofocus>
+    
+</ng-template>

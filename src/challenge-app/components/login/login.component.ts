@@ -13,6 +13,7 @@ import { AuthService } from '@services';
 
 export class LoginComponent implements OnInit {
     public loginForm: FormGroup;
+    public isLoading = false;
     public maxInputChatacters = 30;
     constructor(
         private fb: FormBuilder,
@@ -29,15 +30,20 @@ export class LoginComponent implements OnInit {
      }
      public submit() {
          if (this.loginForm.valid) {
-             console.log(this.loginForm.value);
              this.getUserData(`${this.loginForm.value.firstName.toLowerCase()}_${this.loginForm.value.lastName.toLowerCase()}`);
 
          }
      }
     private async getUserData(userName: string) {
-        const [groupId, userId] = await Promise.all(
-            [this.authorizeRequestService.getGroupId(userName), this.authorizeRequestService.getUserId(userName)]);
-            this.authService.setUserData({userId, groupId});
-            this.router.navigate(['/pro-con']);
+        try {
+            this.isLoading = true;
+            const [groupId, userId] = await Promise.all(
+                [this.authorizeRequestService.getGroupId(userName), this.authorizeRequestService.getUserId(userName)]
+                );
+                this.authService.setUserData({userId, groupId});
+                this.router.navigate(['/pro-con', {userId, groupId}]);
+        } catch (err) {
+            this.isLoading = false;
+        }
      }
 }

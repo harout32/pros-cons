@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginPageComponent, ProConPageComponent } from '@pages';
-import { ProConGuard } from '@services/guards'
+import { ProConResolveService } from '@services/resolvers';
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginPageComponent},
-  {path: 'pro-con', component: ProConPageComponent, canActivate: [ProConGuard]}
+  {path: 'pro-con', component: ProConPageComponent, resolve: {proCon: ProConResolveService}},
+  {path: '**', redirectTo: '/login'}
 ];
 
 @NgModule({

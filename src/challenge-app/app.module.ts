@@ -13,10 +13,10 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 
 import { LoginPageComponent, ProConPageComponent } from '@pages';
-import { LoginComponent } from '@components';
+import { LoginComponent, ProConListComponent } from '@components';
 import { ProsConsRequestService, AuthorizeRequestService } from '@services/api';
 import { AuthService, ProConService } from '@services';
-import { ProConGuard } from '@services/guards';
+import { ProConResolveService } from '@services/resolvers';
 registerLocaleData(en);
 
 
@@ -25,7 +25,8 @@ registerLocaleData(en);
     AppComponent,
     LoginPageComponent,
     LoginComponent,
-    ProConPageComponent
+    ProConPageComponent,
+    ProConListComponent
   ],
   imports: [
     BrowserModule,
@@ -41,8 +42,8 @@ registerLocaleData(en);
     ProsConsRequestService,
     AuthorizeRequestService,
     AuthService,
-    ProConGuard,
-    ProConService
+    ProConService,
+    ProConResolveService
   ],
   bootstrap: [AppComponent]
 })
